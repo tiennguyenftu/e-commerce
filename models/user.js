@@ -7,16 +7,8 @@ var userSchema = new Schema({
     email: {type: String, unique: true},
     first_name: String,
     last_name: String,
-    hashed_password: String,
-    addresses: [
-        {
-            name: String,
-            street: String,
-            city: String,
-            state: String,
-            zip: Number
-        }
-    ],
+    password: String,
+    addresses: [{type: Schema.Types.Object}],
     payment_methods: [
         {
             name: String,

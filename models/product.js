@@ -3,16 +3,15 @@ var Schema = mongoose.Schema;
 
 var productSchema = new Schema({
     slug: {type: String, unique: true},
-    sku: String,
+    sku: {type: String, unique: true, required: true},
     name: {type: String, required: true, unique: true},
     description: {type: String, required: true},
     details: {
-        weight: Number,
-        weight_units: String,
-        model_num: Number,
-        manufacturer: String,
-        color: String
+        band_sizes: [Number],
+        cup_sizes: [String],
+        colors: [String]
     },
+    imageUrls: [{type: String}],
     total_reviews: Number,
     average_reviews: Number,
     pricing: {
@@ -29,7 +28,6 @@ var productSchema = new Schema({
     ],
     primary_category: {type: Schema.Types.ObjectId, ref: 'Category'},
     category_ids: [{type: Schema.Types.ObjectId, ref: 'Category'}],
-    main_cat_id: {type: Schema.Types.ObjectId, ref: 'Category'},
     tags: [String]
 });
 

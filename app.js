@@ -9,10 +9,14 @@ var expressHbs = require('express-handlebars');
 
 var configDatabase = require('./config/database');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var categoryRoutes = require('./routes/shop/category');
+var productRoutes = require('./routes/shop/product');
+var orderRoutes = require('./routes/shop/order');
+var userRoutes = require('./routes/authentication/user');
 
-mongoose.connect(configDatabase.url);
+mongoose.connect(configDatabase.url, function () {
+  console.log('Connected to database');
+});
 
 var app = express();
 
@@ -31,8 +35,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use(categoryRoutes);
+app.use(productRoutes);
+app.use(orderRoutes);
+app.use(userRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
