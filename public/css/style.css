@@ -1,0 +1,41 @@
+body {
+  font: 17px "Lato", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  background-color: #f5f5f5;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.jumbotron {
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../img/victoria-background.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/victoria-background.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  background-attachment: fixed;
+}
+
+.jumbotron p, .jumbotron h1 {
+  line-height: 1.7;
+  color: #f5f5f5;
+}
+
+form {
+  padding-bottom: 50px;
+}
+
+.form-group label {
+  color: black;
+}
+
+.form-group input[type="file"] {
+  color: black;
+  opacity: 100;
+  position: relative;
+}
+
+.thumbnail {
+  height: 370px;
+}

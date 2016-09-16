@@ -7,8 +7,11 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var expressHbs = require('express-handlebars');
 
-var configDatabase = require('./config/database');
 
+var configDatabase = require('./config/database');
+var Category = require('./models/category');
+
+var indexRoutes = require('./routes/index');
 var categoryRoutes = require('./routes/shop/category');
 var productRoutes = require('./routes/shop/product');
 var orderRoutes = require('./routes/shop/order');
@@ -35,10 +38,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function (req, res, next) {
+  Category.find({}, function (err, categories) {
+    if (err) return next(err);
+    res.locals.categories = categories;
+    next();
+  });
+});
+
+
 app.use(categoryRoutes);
 app.use(productRoutes);
 app.use(orderRoutes);
 app.use(userRoutes);
+app.use(indexRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
