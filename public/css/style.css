@@ -10,8 +10,8 @@ a {
 }
 
 #home-jumbotron {
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../img/victoria-background.jpg");
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/victoria-background.jpg");
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../img/background/victoria-background.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/background/victoria-background.jpg");
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -24,6 +24,22 @@ a {
 #products-jumbotron {
   background-color: #b73acc;
   color: #fff;
+}
+
+#about {
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../img/background/waves.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/background/waves.jpg");
+  background-size: cover;
+  background-position: center;
+  /*height: 100vh;*/
+  background-attachment: fixed;
+
+  line-height: 1.7;
+  color: #f5f5f5;
+}
+
+#about-row {
+  padding-bottom: 20px;
 }
 
 form {
