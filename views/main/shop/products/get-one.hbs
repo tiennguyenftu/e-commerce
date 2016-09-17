@@ -35,22 +35,47 @@
         <div class="col-sm-6">
             <h1>{{product.name}}</h1>
             {{#equal product.pricing.retail product.pricing.sale}}
-                <p id="retail">${{product.pricing.retail}}</p>
+                <strong><p id="retail">${{product.pricing.retail}}</p></strong>
             {{else}}
                 <p>
-                    <span class="retail-price">${{product.pricing.retail}}</span> - <span class="sale-price">${{product.pricing.sale}} Sales Off!</span><span id="sku">{{product.sku}}</span>
+                    <strong>
+                        <span class="retail-price">${{product.pricing.retail}}</span> - <span class="sale-price">${{product.pricing.sale}} Sales Off!</span><span id="sku">{{product.sku}}</span>
+                    </strong>
                 </p>
             {{/equal}}
+            <hr>
             <p>{{{product.description}}}</p>
             <form>
                 <div class="form-group">
                     <label for="sizes">Sizes</label>
                     <select name="sizes" id="sizes" class="form-control">
                         {{#each product.details.sizes}}
-                            <li>{{this}}</li>
+                            <option value="{{this}}">{{this}}</option>
                         {{/each}}
                     </select>
                 </div>
+
+                {{#if product.details.colors}}
+                    <div class="form-group">
+                        <label for="colors">Colors</label>
+                        <select name="colors" id="colors" class="form-control">
+                            {{#each product.details.colors}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                {{/if}}
+
+                <button type="submit" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> &nbsp; ADD TO CART</button>
+
+                {{#if product.tags}}
+                    <div class="form-group">
+                        Tags:
+                        {{#each product.tags}}
+                            <strong><span>#{{this}}</span></strong>
+                        {{/each}}
+                    </div>
+                {{/if}}
             </form>
         </div>
     </div>

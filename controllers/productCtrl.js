@@ -11,7 +11,7 @@ exports.addProduct = function (req, res, next) {
 exports.getProduct = function (req, res, next) {
     Product.findOne({slug: req.params.slug}, function (err, product) {
         if (err) return next(err);
-        console.log(product);
+        console.log(product.details.sizes);
         res.render('main/shop/products/get-one', {product: product, helpers: {
             equal: function(lvalue, rvalue, options) {
                 if (arguments.length < 3)
