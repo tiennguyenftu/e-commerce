@@ -1,4 +1,4 @@
-var Category = require('../models/category');
+var Category = require('../models/Category');
 
 exports.getAllCategories = function (req, res, next) {
     Category.find({}, function (err, categories) {
@@ -7,9 +7,14 @@ exports.getAllCategories = function (req, res, next) {
     });
 };
 
+exports.addCategory = function (req, res, next) {
+    res.render('main/shop/categories/add')
+};
+
 exports.getCategory = function (req, res, next) {
-    Category.find({slug: req.params.slug}, function (err, category) {
+    Category.findOne({slug: req.params.slug}, function (err, category) {
         if (err) return next(err);
+        if (!category) return res.redirect('/categories');
         res.json(category);
     });
 };
@@ -17,17 +22,15 @@ exports.getCategory = function (req, res, next) {
 exports.editCategory = function (req, res, next) {
     Category.findOne({slug: req.params.slug}, function (err, category) {
         if (err) return next(err);
+        if (!category) return res.redirect('/categories');
         res.render('main/shop/categories/edit', {category: category});
     });
-};
-
-exports.addCategory = function (req, res, next) {
-    res.render('main/shop/categories/add')
 };
 
 exports.createCategory = function (req, res, next) {
 
     var newCategory = new Category();
+    console.log(req.body);
     upsert(req, res, next, newCategory);
 };
 
@@ -39,6 +42,7 @@ exports.updateCategory = function (req, res, next) {
     });
 };
 
+
 exports.deleteCategory = function (req, res, next) {
     Category.findOneAndRemove({slug: req.params.slug}, function (err) {
         if (err) return next(err);
@@ -46,7 +50,7 @@ exports.deleteCategory = function (req, res, next) {
     });
 };
 
-
+//HELPERS
 function toTitleCase(str) {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
@@ -57,23 +61,22 @@ function upsert(req, res, next, category) {
     if (req.file) {
         category.image = '/uploads/categories/' + req.file.filename;
     } else {
-        category.image = '/uploads/categories/default.jpg';
+        category.image = null;
     }
-    if (req.body["parent-category"]) {
-        Category.find({name: req.body['parent-category']}, function (err, parentCategory) {
-            if (err) return next(err);
-            console.log('Parent: '+ parentCategory);
-            category.parent_id = parentCategory._id;
-            category.ancestors.push(parentCategory);
-            category.save(function (err) {
-                if (err) return next(err);
-                res.json(category);
-            });
-        });
+    if (req.body.parent) {
+        category.parent = req.body.parent;
+        if (req.body.ancestors.length > 1) {
+            category.ancestors = req.body.ancestors;
+        } else if (req.body.ancestors.length === 1) {
+            category.ancestors.push(req.body.ancestors);
+        }
     } else {
-        category.save(function (err) {
-            if (err) return next(err);
-            res.json(category);
-        });
+        category.parent = null;
     }
+
+    category.save(function (err) {
+        if (err) return next(err);
+        res.redirect('/categories');
+    });
+
 }

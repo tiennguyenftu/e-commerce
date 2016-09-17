@@ -45,3 +45,6 @@ jspm_packages
 
 # Seeder
 seeder
+
+# Bower
+bower_components

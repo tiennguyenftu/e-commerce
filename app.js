@@ -6,10 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var expressHbs = require('express-handlebars');
-
+var methodOverride = require('method-override');
 
 var configDatabase = require('./config/database');
-var Category = require('./models/category');
+var shopMiddleWare = require('./middleware/shop');
 
 var indexRoutes = require('./routes/index');
 var categoryRoutes = require('./routes/shop/category');
@@ -37,15 +37,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
-app.use(function (req, res, next) {
-  Category.find({}, function (err, categories) {
-    if (err) return next(err);
-    res.locals.categories = categories;
-    next();
-  });
-});
 
+app.use(shopMiddleWare.getAllCategories);
+app.use(shopMiddleWare.getAllProducts);
 
 app.use(categoryRoutes);
 app.use(productRoutes);

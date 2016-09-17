@@ -14,10 +14,8 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 
-/* GET/:categories */
+/* GET/categories */
 router.get('/categories', categoryCtrl.getAllCategories);
-
-
 
 /* GET/categories/add */
 router.get('/categories/add', categoryCtrl.addCategory);
@@ -25,13 +23,13 @@ router.get('/categories/add', categoryCtrl.addCategory);
 /* GET/:category */
 router.get('/categories/:slug', categoryCtrl.getCategory);
 
+/* GET/:category/edit */
+router.get('/categories/:slug/edit', categoryCtrl.editCategory);
+
+
+
 /* POST/:category */
 router.post('/categories', upload.single('category-image'),categoryCtrl.createCategory);
-
-
-
-/* GET/categories/edit */
-router.get('/categories/:slug/edit', categoryCtrl.editCategory);
 
 /* PUT/:category */
 router.post('/categories/:slug/edit', upload.single('category-image'), categoryCtrl.updateCategory);

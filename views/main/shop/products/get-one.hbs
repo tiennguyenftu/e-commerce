@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card card-raised card-carousel">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <div class="carousel slide" data-ride="carousel">
+
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            {{#each product.images}}
+                                <li data-target="#carousel-example-generic" data-slide-to="{{@index}}" class="{{#unless @index}}active{{/unless}}"></li>
+                            {{/each}}
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            {{#each product.images}}
+                                <div class="item {{#unless @index}}active{{/unless}}">
+                                    <img src="{{this}}" alt="{{@index}}">
+                                </div>
+                            {{/each}}
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                            <i class="material-icons">keyboard_arrow_left</i>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <h1>{{product.name}}</h1>
+            {{#equal product.pricing.retail product.pricing.sale}}
+                <p id="retail">${{product.pricing.retail}}</p>
+            {{else}}
+                <p>
+                    <span class="retail-price">${{product.pricing.retail}}</span> - <span class="sale-price">${{product.pricing.sale}} Sales Off!</span><span id="sku">{{product.sku}}</span>
+                </p>
+            {{/equal}}
+            <p>{{{product.description}}}</p>
+            <form>
+                <div class="form-group">
+                    <label for="sizes">Sizes</label>
+                    <select name="sizes" id="sizes" class="form-control">
+                        {{#each product.details.sizes}}
+                            <li>{{this}}</li>
+                        {{/each}}
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

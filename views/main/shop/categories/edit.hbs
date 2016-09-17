@@ -13,8 +13,18 @@
             </div>
 
             <div class="form-group">
-                <label for="parent-category">Parent Categories:</label>
-                <select name="parent-category" id="parent-category" class="form-control">
+                <label for="parent-category">Parent Category:</label>
+                <select name="parent" id="parent-category" class="form-control">
+                    <option></option>
+                    {{#each categories}}
+                        <option>{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ancestors">Ancestors:</label>
+                <select name="ancestors" id="ancestors" class="form-control" multiple>
                     <option></option>
                     {{#each categories}}
                         <option>{{this.name}}</option>

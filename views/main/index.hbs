@@ -1,16 +1,25 @@
-<div class="jumbotron">
+<div class="jumbotron" id="home-jumbotron">
     <div class="container">
         <div class="text-center">
             <h1>FREE TRAVEL TOTE WITH $85 USD PURCHASE</h1>
             <p>Comes with matching pouch! A $99 Value. Excludes Clearance. Code VS85TOTE. Limited time offer!</p>
             <p>
                 <a class="btn btn-primary btn-lg btn-round btn-danger" href="#" role="button">Details</a>
-                <a class="btn btn-primary btn-lg btn-round" href="#" role="button">View Catalogue</a>
+                <a class="btn btn-primary btn-lg btn-round" href="/categories" role="button">View Catalogue</a>
             </p>
         </div>
     </div>
 </div>
 
 <section>
-    {{>categories}}
+    {{>shop/categories}}
+</section>
+
+<section>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h2>Latest Product</h2></div>
+    </div>
+    <div class="panel-body">
+        {{>shop/products}}
+    </div>
 </section>

@@ -1,5 +1,5 @@
 body {
-  font: 17px "Lato", Helvetica, Arial, sans-serif;
+  font: 16px "Lato", Helvetica, Arial, sans-serif;
   line-height: 1.5;
   background-color: #f5f5f5;
 }
@@ -8,18 +8,20 @@ a {
   color: #00B7FF;
 }
 
-.jumbotron {
+#home-jumbotron {
   background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../img/victoria-background.jpg");
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/victoria-background.jpg");
   background-size: cover;
   background-position: center;
   height: 100vh;
   background-attachment: fixed;
-}
 
-.jumbotron p, .jumbotron h1 {
   line-height: 1.7;
   color: #f5f5f5;
+}
+
+#products-jumbotron {
+  background-color: #62d8ff;
 }
 
 form {
@@ -36,6 +38,20 @@ form {
   position: relative;
 }
 
-.thumbnail {
-  height: 370px;
+.retail-price {
+  text-decoration: line-through;
+  font-size: 1.5em;
+}
+
+.sale-price {
+  color: red;
+  font-size: 1.5em;
+}
+
+#retail {
+  font-size: 1.5em;
+}
+
+#sku {
+  float: right;
 }

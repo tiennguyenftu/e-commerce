@@ -1,4 +1,4 @@
-var Order = require('../models/order');
+var Order = require('../models/Order');
 
 exports.getAllOrders = function (req, res, next) {
     Order.find({}, function (err, orders) {
