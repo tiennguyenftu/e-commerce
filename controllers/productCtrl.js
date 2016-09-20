@@ -1,4 +1,5 @@
 var Product = require('../models/Product');
+var moment = require('moment');
 
 exports.getAllProducts = function (req, res, next) {
     res.render('main/shop/products/get-all');
@@ -12,17 +13,7 @@ exports.getProduct = function (req, res, next) {
     Product.findOne({slug: req.params.slug}, function (err, product) {
         if (err) return next(err);
         console.log(product.details.sizes);
-        res.render('main/shop/products/get-one', {product: product, helpers: {
-            equal: function(lvalue, rvalue, options) {
-                if (arguments.length < 3)
-                    throw new Error("Handlebars Helper equal needs 2 parameters");
-                if( lvalue!=rvalue ) {
-                    return options.inverse(this);
-                } else {
-                    return options.fn(this);
-                }
-            }
-        }});
+        res.render('main/shop/products/get-one', {product: product});
     });
 };
 
@@ -83,6 +74,8 @@ function upsert(req, res, next, product) {
     if (req.body.tags) {
         product.tags = req.body.tags.toLowerCase().split(',');
     }
+
+    product.date = moment().format('MMMM Do YYYY, h:mm a');
 
     product.save(function (err) {
         if (err) return next(err);

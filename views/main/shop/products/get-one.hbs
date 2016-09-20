@@ -34,26 +34,31 @@
         </div>
         <div class="col-sm-6">
             <h1>{{product.name}}</h1>
+            <p class="help-block">{{product.date}}</p>
             {{#equal product.pricing.retail product.pricing.sale}}
                 <strong><p id="retail">${{product.pricing.retail}}</p></strong>
             {{else}}
                 <p>
                     <strong>
-                        <span class="retail-price">${{product.pricing.retail}}</span> - <span class="sale-price">${{product.pricing.sale}} Sales Off!</span><span id="sku">{{product.sku}}</span>
+                        <span class="retail-price">${{product.pricing.retail}}</span> - <span class="sale-price">${{product.pricing.sale}} Sales Off!</span>
                     </strong>
                 </p>
             {{/equal}}
             <hr>
+            <p><strong>SKU:</strong> {{product.sku}}</p>
+            <p><strong>Description:</strong></p>
             <p>{{{product.description}}}</p>
             <form>
-                <div class="form-group">
-                    <label for="sizes">Sizes</label>
-                    <select name="sizes" id="sizes" class="form-control">
-                        {{#each product.details.sizes}}
-                            <option value="{{this}}">{{this}}</option>
-                        {{/each}}
-                    </select>
-                </div>
+                {{#if product.details.sizes}}
+                    <div class="form-group">
+                        <label for="sizes">Sizes</label>
+                        <select name="sizes" id="sizes" class="form-control">
+                            {{#each product.details.sizes}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                {{/if}}
 
                 {{#if product.details.colors}}
                     <div class="form-group">
@@ -68,11 +73,20 @@
 
                 <button type="submit" class="btn btn-danger btn-round"><i class="fa fa-shopping-cart" aria-hidden="true"></i> &nbsp; ADD TO CART</button>
 
+                {{#if product.categories}}
+                    <div class="form-group">
+                        Categories:
+                        {{#each product.categories}}
+                            <strong><span class="label label-success">{{this}}</span></strong>
+                        {{/each}}
+                    </div>
+                {{/if}}
+
                 {{#if product.tags}}
                     <div class="form-group">
-                        Tags:
+                        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> :
                         {{#each product.tags}}
-                            <strong><span>#{{this}}</span></strong>
+                            <strong><span class="label label-primary">#{{this}}</span></strong>
                         {{/each}}
                     </div>
                 {{/if}}

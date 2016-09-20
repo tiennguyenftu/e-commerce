@@ -9,6 +9,10 @@ a {
   color: #00B7FF;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 #home-jumbotron {
   background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../img/background/victoria-background.jpg");
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/background/victoria-background.jpg");
@@ -58,18 +62,30 @@ form {
 
 .retail-price {
   text-decoration: line-through;
-  font-size: 1.7em;
+  font-size: 1.5em;
 }
 
 .sale-price {
   color: red;
-  font-size: 1.7em;
+  font-size: 1.5em;
 }
 
 #retail {
-  font-size: 1.7em;
+  font-size: 1.5em;
 }
 
 #sku {
   float: right;
 }
+
+.thumbnail {
+  min-height: 310px;
+}
+
+#products-thumbnail {
+  min-height: 700px;
+  position: relative;
+}
+
+
+

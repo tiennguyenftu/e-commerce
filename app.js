@@ -16,6 +16,7 @@ var categoryRoutes = require('./routes/shop/category');
 var productRoutes = require('./routes/shop/product');
 var orderRoutes = require('./routes/shop/order');
 var userRoutes = require('./routes/authentication/user');
+var saleRoutes = require('./routes/shop/sales');
 
 mongoose.connect(configDatabase.url, function () {
   console.log('Connected to database');
@@ -26,7 +27,18 @@ var app = express();
 // view engine setup
 app.engine('.hbs', expressHbs({
   defaultLayout: 'layout',
-  extname: '.hbs'
+  extname: '.hbs',
+  helpers: {
+    equal: function(lvalue, rvalue, options) {
+      if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+      if( lvalue!=rvalue ) {
+        return options.inverse(this);
+      } else {
+        return options.fn(this);
+      }
+    }
+  }
 }));
 app.set('view engine', '.hbs');
 
@@ -48,6 +60,7 @@ app.use(productRoutes);
 app.use(orderRoutes);
 app.use(userRoutes);
 app.use(indexRoutes);
+app.use(saleRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

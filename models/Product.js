@@ -18,7 +18,8 @@ var productSchema = new Schema({
         sale: Number
     },
     categories: [String],
-    tags: [String]
+    tags: [String],
+    date: String
 });
 
 module.exports = mongoose.model('Product', productSchema);
