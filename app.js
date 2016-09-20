@@ -51,8 +51,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 
-
-app.use(shopMiddleWare.getAllCategories);
+app.use(shopMiddleWare.getMainCategories);
+app.use(shopMiddleWare.getBras);
+app.use(shopMiddleWare.getPanties);
+app.use(shopMiddleWare.getLingerie);
+app.use(shopMiddleWare.getSleep);
+app.use(shopMiddleWare.getBeauty);
+app.use(shopMiddleWare.getSwim);
+app.use(shopMiddleWare.getSport);
+app.use(shopMiddleWare.getLounge);
 app.use(shopMiddleWare.getAllProducts);
 
 app.use(categoryRoutes);

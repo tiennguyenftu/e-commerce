@@ -1,7 +1,6 @@
 <div class="container">
     <div class="row">
         {{#each categories}}
-            {{#unless ancestors}}
                 <div class="col-sm-6 col-md-4">
                     <a href="/categories/{{this.slug}}">
                         <div class="thumbnail" id="#categories-thumbnail">
@@ -14,7 +13,6 @@
                         </div>
                     </a>
                 </div>
-            {{/unless}}
         {{/each}}
     </div>
 </div>

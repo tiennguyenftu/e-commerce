@@ -1,14 +1,126 @@
 <div class="container">
     <div class="col-md-10 col-md-offset-1">
         <ul class="nav nav-pills">
-            <li role="presentation"><a href="/categories/bras-&-bralettes" class="btn btn-info">Bras & Bralettes</a></li>
-            <li role="presentation"><a href="/categories/panties" class="btn btn-info">Panties</a></li>
-            <li role="presentation"><a href="/categories/lingerie" class="btn btn-info">Lingerie</a></li>
-            <li role="presentation"><a href="/categories/sleep" class="btn btn-info">Sleep</a></li>
-            <li role="presentation"><a href="/categories/beauty" class="btn btn-info">Beauty</a></li>
-            <li role="presentation"><a href="/categories/swim" class="btn btn-info">Swim</a></li>
-            <li role="presentation"><a href="/categories/sport" class="btn btn-info">Sport</a></li>
-            <li role="presentation"><a href="/categories/lounge-&-shoes" class="btn btn-info">Lounge</a></li>
+            {{#if bras}}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Bras & Bralettes <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {{#each bras}}
+                            <li><a href="/categories/{{this.slug}}">{{this.name}}</a></li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{else}}
+                <li role="presentation"><a href="/categories/bras" class="btn btn-danger">Bras & Bralettes</a></li>
+            {{/if}}
+
+            {{#if panties}}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Panties <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {{#each panties}}
+                            <li><a href="/categories/{{this.slug}}">{{this.name}}</a></li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{else}}
+                <li role="presentation"><a href="/categories/panties" class="btn btn-danger">Panties</a></li>
+            {{/if}}
+
+            {{#if lingerie}}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Lingerie <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {{#each lingerie}}
+                            <li><a href="/categories/{{this.slug}}">{{this.name}}</a></li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{else}}
+                <li role="presentation"><a href="/categories/lingerie" class="btn btn-danger">Lingerie</a></li>
+            {{/if}}
+
+            {{#if sleep}}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Sleep <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {{#each sleep}}
+                            <li><a href="/categories/{{this.slug}}">{{this.name}}</a></li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{else}}
+                <li role="presentation"><a href="/categories/sleep" class="btn btn-danger">Sleep</a></li>
+            {{/if}}
+
+            {{#if beauty}}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Beauty <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {{#each beauty}}
+                            <li><a href="/categories/{{this.slug}}">{{this.name}}</a></li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{else}}
+                <li role="presentation"><a href="/categories/beauty" class="btn btn-danger">Beauty</a></li>
+            {{/if}}
+
+            {{#if swim}}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Swim <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {{#each swim}}
+                            <li><a href="/categories/{{this.slug}}">{{this.name}}</a></li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{else}}
+                <li role="presentation"><a href="/categories/swim" class="btn btn-danger">Swim</a></li>
+            {{/if}}
+
+            {{#if sport}}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Sport <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {{#each sport}}
+                            <li><a href="/categories/{{this.slug}}">{{this.name}}</a></li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{else}}
+                <li role="presentation"><a href="/categories/sport" class="btn btn-danger">Sport</a></li>
+            {{/if}}
+
+            {{#if lounge}}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Lounge <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {{#each lounge}}
+                            <li><a href="/categories/{{this.slug}}">{{this.name}}</a></li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{else}}
+                <li role="presentation"><a href="/categories/lounge-&-shoes" class="btn btn-danger">Lounge</a></li>
+            {{/if}}
+
         </ul>
     </div>
 </div>
