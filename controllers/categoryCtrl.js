@@ -1,4 +1,5 @@
 var Category = require('../models/Category');
+var Product = require('../models/Product');
 
 exports.getAllCategories = function (req, res, next) {
     Category.find({}, function (err, categories) {
@@ -12,11 +13,16 @@ exports.addCategory = function (req, res, next) {
 };
 
 exports.getCategory = function (req, res, next) {
-    Category.findOne({slug: req.params.slug}, function (err, category) {
+    Category.findOne({slug: req.params.slug}, 'name', function (err, category) {
         if (err) return next(err);
         if (!category) return res.redirect('/categories');
-        res.json(category);
-    });
+
+        Product.find({categories: category.name}, 'name images pricing slug', function (err, products) {
+            if (err) return next(err);
+            if (!products) return res.redirect('/categories');
+            res.render('main/shop/categories/get-one', {products: products, category: category});
+        });
+    })
 };
 
 exports.editCategory = function (req, res, next) {

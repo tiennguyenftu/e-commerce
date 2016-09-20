@@ -6,7 +6,7 @@
                 <p>Comes with matching pouch! A $99 Value. Excludes Clearance. Code VS85TOTE. Limited time offer!</p>
                 <p>
                     <a class="btn btn-primary btn-lg btn-round btn-danger" href="/sales" role="button">Sales</a>
-                    <a class="btn btn-primary btn-lg btn-round" href="/categories" role="button">View Catalogue</a>
+                    <a class="btn btn-primary btn-lg btn-round" href="/products" role="button">Go to Shop</a>
                 </p>
             </div>
         </div>
@@ -20,7 +20,12 @@
 <section>
     <div class="container">
         <hr>
-        <h2>Latest Products</h2>
+        <div class="row">
+            <h2 style="float: left">Latest Products</h2>
+            <a href="/products" class="btn btn-primary btn-round" role="button" style="float: right;display: block;margin-top: 25px">
+                View All Products <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
     </div>
     {{>shop/products}}
 </section>

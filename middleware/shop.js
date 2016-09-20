@@ -10,13 +10,7 @@ exports.getAllCategories = function (req, res, next) {
 };
 
 exports.getAllProducts = function (req, res, next) {
-    Product.aggregate([
-        {
-            $sort: {
-                date: -1
-            }
-        }
-    ], function (err, products) {
+    Product.find({}, 'name images pricing slug').sort({date: -1}).exec(function (err, products) {
         if (err) return next(err);
         res.locals.products = products;
         next();
