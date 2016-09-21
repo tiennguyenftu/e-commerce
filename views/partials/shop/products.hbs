@@ -1,31 +1,45 @@
 <div class="container">
     <div class="row">
-        {{#each products}}
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail" id="products-thumbnail">
-                    <img class="img-responsive" src="{{this.images.[0]}}" alt="{{this.name}}">
-                    <div class="caption">
-                        <div class="text-center">
-                            <p>{{this.name}}</p>
+        {{#if products}}
+            {{#each products}}
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail" id="products-thumbnail">
+                        <img class="img-responsive" src="{{this.images.[0]}}" alt="{{this.name}}">
+                        <div class="caption">
+                            <div class="text-center">
+                                <p>{{this.name}}</p>
 
-                            {{#equal this.pricing.retail this.pricing.sale}}
-                                <strong><p id="retail">${{this.pricing.retail}}</p></strong>
-                            {{else}}
+                                {{#equal this.pricing.retail this.pricing.sale}}
+                                    <strong><p id="retail">${{this.pricing.retail}}</p></strong>
+                                {{else}}
+                                    <p>
+                                        <strong>
+                                            <span class="retail-price">${{this.pricing.retail}}</span> - <span class="sale-price">${{this.pricing.sale}}</span>
+                                        </strong>
+                                    </p>
+                                {{/equal}}
+
                                 <p>
-                                    <strong>
-                                        <span class="retail-price">${{this.pricing.retail}}</span> - <span class="sale-price">${{this.pricing.sale}} Sales Off!</span>
-                                    </strong>
+                                    <a href="/products/{{this.slug}}" class="btn btn-primary btn-round" role="button">Details <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                    <a href="#" class="btn btn-danger btn-round" role="button"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                                 </p>
-                            {{/equal}}
-
-                            <p>
-                                <a href="/products/{{this.slug}}" class="btn btn-primary btn-round" role="button">Details <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                                <a href="#" class="btn btn-danger btn-round" role="button"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {{/each}}
+            {{/each}}
+        {{else}}
+            <h1>No Product Found.</h1>
+        {{/if}}
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+

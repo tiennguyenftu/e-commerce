@@ -1,0 +1,64 @@
+<div class="container">
+    <hr>
+    <div class="row">
+        <div class="row">
+            <div class="col-md-9">
+                <h2 style="padding-bottom: 10px">Latest Products</h2>
+            </div>
+            <div class="col-md-3">
+                <!-- Controls -->
+                <div class="controls pull-right hidden-xs" style="padding-top: 20px">
+                    <a class="left fa fa-chevron-left btn btn-success" href="#latest-products"
+                       data-slide="prev"></a>
+                    <a class="right fa fa-chevron-right btn btn-success" href="#latest-products"
+                                                data-slide="next"></a>
+                </div>
+            </div>
+        </div>
+        <div id="latest-products" class="carousel slide hidden-xs" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                {{#if products}}
+                    {{#each products}}
+                        <div class="item {{#unless @index}}active{{/unless}}">
+                            <div class="row">
+                                {{#each this}}
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="thumbnail" >
+                                            <img class="img-responsive" src="{{this.images.[0]}}" alt="{{this.name}}">
+                                            <div class="caption">
+                                                <div class="text-center">
+                                                    <p>{{this.name}}</p>
+
+                                                    {{#equal this.pricing.retail this.pricing.sale}}
+                                                        <strong><p id="retail">${{this.pricing.retail}}</p></strong>
+                                                    {{else}}
+                                                        <p>
+                                                            <strong>
+                                                                <span class="retail-price">${{this.pricing.retail}}</span> - <span class="sale-price">${{this.pricing.sale}}</span>
+                                                            </strong>
+                                                        </p>
+                                                    {{/equal}}
+
+                                                    <p>
+                                                        <a href="/products/{{this.slug}}" class="btn btn-primary btn-round" role="button">Details <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                                        <a href="#" class="btn btn-danger btn-round" role="button"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    {{/each}}
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/products" class="btn btn-primary btn-round" role="button" style="float: right;">
+            View All Products <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>

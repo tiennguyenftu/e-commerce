@@ -85,11 +85,20 @@ exports.getLounge = function (req, res, next) {
 
 //Get All Products
 
-exports.getAllProducts = function (req, res, next) {
-    Product.find({}, 'name images pricing slug').sort({date: -1}).exec(function (err, products) {
-        if (err) return next(err);
-        if (!products) return next();
-        res.locals.products = products;
-        next();
-    });
+exports.getLatestProducts = function (req, res, next) {
+
+    Product.find({}, 'name images pricing slug')
+        .sort({date: -1})
+        .limit(12)
+        .exec(function (err, products) {
+            if (err) return next(err);
+            if (!products) return next();
+            var productChunks = [];
+            var chunkSize = 4;
+            for (var i = 0; i < products.length; i += chunkSize) {
+                productChunks.push(products.slice(i, i + chunkSize));
+            }
+            res.locals.products = productChunks;
+            next();
+        });
 };

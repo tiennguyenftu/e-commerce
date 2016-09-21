@@ -2,7 +2,12 @@ var Product = require('../models/Product');
 var moment = require('moment');
 
 exports.getAllProducts = function (req, res, next) {
-    res.render('main/shop/products/get-all');
+    Product.find({}, 'name images slug pricing')
+        .sort({date: -1})
+        .exec(function (err, products) {
+            if (err) return next(err);
+            res.render('main/shop/products/get-all', {products: products});
+        });
 };
 
 exports.addProduct = function (req, res, next) {
@@ -44,7 +49,6 @@ exports.deleteProduct = function (req, res, next) {
 };
 
 
-
 //HELPERS
 function toTitleCase(str) {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -82,3 +86,28 @@ function upsert(req, res, next, product) {
     });
 }
 
+
+function paginate(req, res, next) {
+
+    var perPage = 12;
+    var page = req.query.p;
+
+    Product
+        .find()
+        .skip( perPage * page)
+        .limit( perPage )
+        .populate('category')
+        .exec(function(err, products) {
+            if (err) return next(err);
+            Product.count().exec(function(err, count) {
+                if (err) return next(err);
+                res.render('main/shop/products/get-all', {
+                    products: products,
+                   pagination: {
+                       pageCount: count / perPage,
+                       page: page
+                   }
+                });
+            });
+        });
+}

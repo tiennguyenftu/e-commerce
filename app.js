@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var expressHbs = require('express-handlebars');
+var paginate = require('handlebars-paginate');
 var methodOverride = require('method-override');
 
 var configDatabase = require('./config/database');
@@ -37,13 +38,14 @@ app.engine('.hbs', expressHbs({
       } else {
         return options.fn(this);
       }
-    }
+    },
+    paginate: paginate
   }
 }));
 app.set('view engine', '.hbs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -60,7 +62,7 @@ app.use(shopMiddleWare.getBeauty);
 app.use(shopMiddleWare.getSwim);
 app.use(shopMiddleWare.getSport);
 app.use(shopMiddleWare.getLounge);
-app.use(shopMiddleWare.getAllProducts);
+app.use(shopMiddleWare.getLatestProducts);
 
 app.use(categoryRoutes);
 app.use(productRoutes);
