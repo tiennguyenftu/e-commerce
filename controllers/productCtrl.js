@@ -2,11 +2,26 @@ var Product = require('../models/Product');
 var moment = require('moment');
 
 exports.getAllProducts = function (req, res, next) {
-    Product.find({}, 'name images slug pricing')
+    var perPage = 12;
+    var page = req.query.p || 1;
+
+    Product
+        .find()
         .sort({date: -1})
-        .exec(function (err, products) {
+        .skip( perPage * (page - 1))
+        .limit( perPage )
+        .exec(function(err, products) {
             if (err) return next(err);
-            res.render('main/shop/products/get-all', {products: products});
+            Product.count().exec(function(err, count) {
+                if (err) return next(err);
+                res.render('main/shop/products/get-all', {
+                    products: products,
+                    pagination: {
+                        pageCount: Math.ceil(count / perPage),
+                        page: page
+                    }
+                });
+            });
         });
 };
 
@@ -84,30 +99,4 @@ function upsert(req, res, next, product) {
         if (err) return next(err);
         res.redirect('/products');
     });
-}
-
-
-function paginate(req, res, next) {
-
-    var perPage = 12;
-    var page = req.query.p;
-
-    Product
-        .find()
-        .skip( perPage * page)
-        .limit( perPage )
-        .populate('category')
-        .exec(function(err, products) {
-            if (err) return next(err);
-            Product.count().exec(function(err, count) {
-                if (err) return next(err);
-                res.render('main/shop/products/get-all', {
-                    products: products,
-                   pagination: {
-                       pageCount: count / perPage,
-                       page: page
-                   }
-                });
-            });
-        });
 }

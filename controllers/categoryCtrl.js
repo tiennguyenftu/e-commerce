@@ -17,12 +17,31 @@ exports.getCategory = function (req, res, next) {
         if (err) return next(err);
         if (!category) return res.redirect('/categories');
 
-        Product.find({categories: category.name}, 'name images pricing slug', function (err, products) {
-            if (err) return next(err);
-            if (!products) return res.redirect('/categories');
-            res.render('main/shop/categories/get-one', {products: products, category: category});
-        });
-    })
+        var perPage = 12;
+        var page = req.query.p || 1;
+
+        Product
+            .find({categories: category.name})
+            .sort({date: -1})
+            .skip( perPage * (page - 1))
+            .limit( perPage )
+            .exec(function(err, products) {
+                if (err) return next(err);
+                console.log(products);
+                if (products.length === 0) return res.redirect('/categories/' + req.params.slug);
+                Product.count().exec(function(err, count) {
+                    if (err) return next(err);
+                    res.render('main/shop/categories/get-one', {
+                        category: category,
+                        products: products,
+                        pagination: {
+                            pageCount: Math.ceil(count / perPage),
+                            page: page
+                        }
+                    });
+                });
+            });
+    });
 };
 
 exports.editCategory = function (req, res, next) {

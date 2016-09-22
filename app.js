@@ -62,7 +62,6 @@ app.use(shopMiddleWare.getBeauty);
 app.use(shopMiddleWare.getSwim);
 app.use(shopMiddleWare.getSport);
 app.use(shopMiddleWare.getLounge);
-app.use(shopMiddleWare.getLatestProducts);
 
 app.use(categoryRoutes);
 app.use(productRoutes);
