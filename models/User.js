@@ -3,11 +3,9 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = new Schema({
-    username: {type: String, unique: true},
-    email: {type: String, unique: true},
-    first_name: String,
-    last_name: String,
-    password: String,
+    username: {type: String, unique: true, required: true},
+    email: {type: String, unique: true, required: true},
+    password: {type: String, required: true},
     addresses: [{type: Schema.Types.Object}],
     payment_methods: [
         {
@@ -29,5 +27,9 @@ userSchema.pre('save', function (next) {
         });
     });
 });
+
+userSchema.methods.comparePassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+};
 
 module.exports = mongoose.model('User', userSchema);

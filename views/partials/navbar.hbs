@@ -26,7 +26,21 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/sales"><i class="fa fa-usd" aria-hidden="true"></i> Sales</a></li>
                 <li><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a></li>
-                <li><a href="/register"><i class="fa fa-sign-in" aria-hidden="true"></i> Register/ Log In</a></li>
+                {{#if user}}
+                    <li class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            My Account
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="/profile">Profile</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                {{else}}
+                    <li><a href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i></i> Register</a></li>
+                    <li><a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Log In</a></li>
+                {{/if}}
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

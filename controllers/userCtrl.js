@@ -10,25 +10,33 @@ exports.getAllUsers = function (req, res, next) {
 exports.getUser = function (req, res, next) {
     User.find({username: req.params.username}, function (err, user) {
         if (err) return next(err);
-        res.json(user);
+        res.render('main/authentication/user');
     });
 };
 
 exports.createUser = function (req, res, next) {
-    var newUser = new User();
-    newUser.username = req.body.username;
-    newUser.email = req.body.email;
-    newUser.password = req.body.password;
-    newUser.first_name = req.body.first_name;
-    newUser.last_name = req.body.last_name;
-    if (req.body.addresses) {
-        newUser.addresses = req.body.addresses;
-    }
+   if (req.body.password !== req.body.confirmPassword) {
+       req.flash('errors', 'Password did not match');
+       return res.redirect('/register');
+   }
 
-    newUser.save(function (err) {
-        if (err) return next(err);
-        res.json(newUser);
-    });
+   User.find({$or: [{username: req.body.username}, {email: req.body.email}]}, function (err, existingUsers) {
+       if (err) return next(err);
+       if (existingUsers.length > 0) {
+           req.flash('errors', 'Username or Email already taken');
+           return res.redirect('/register');
+       }
+
+       var newUser = new User();
+       newUser.username = req.body.username;
+       newUser.email = req.body.email;
+       newUser.password = req.body.password;
+
+       newUser.save(function (err) {
+           if (err) return next(err);
+           res.redirect('/products');
+       });
+   });
 };
 
 

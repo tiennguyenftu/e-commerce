@@ -11,7 +11,7 @@ module.exports.getAllSales = function (req, res, next) {
         .limit( perPage )
         .exec(function(err, products) {
             if (err) return next(err);
-            console.log(products);
+
             if (products.length === 0) return res.redirect('/sales');
             Product.count().exec(function(err, count) {
                 if (err) return next(err);

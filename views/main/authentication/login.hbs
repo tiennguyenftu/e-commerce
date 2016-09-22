@@ -1,0 +1,33 @@
+<div class="container">
+    <ul class="list-group">
+        {{#if messages.length}}
+            <div class="alert alert-danger alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>{{messages}}
+            </div>
+        {{/if}}
+    </ul>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form action="/login" method="post">
+                <h1>Login</h1>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" name="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" name="password" id="password" required>
+                </div>
+
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary btn-round" value="Log In">
+                    <p>Do not have an account? <a href="/register">Register</a></p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

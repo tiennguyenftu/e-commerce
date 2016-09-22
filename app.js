@@ -4,22 +4,28 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var flash = require('express-flash');
+var session = require('express-session');
+var MongoStore = require('connect-mongo/es5')(session);
+var passport = require('passport');
 var mongoose = require('mongoose');
 var expressHbs = require('express-handlebars');
 var paginate = require('handlebars-paginate');
-var methodOverride = require('method-override');
 
-var configDatabase = require('./config/database');
+
+var secret = require('./config/secret');
 var shopMiddleWare = require('./middleware/shop');
 
 var indexRoutes = require('./routes/index');
 var categoryRoutes = require('./routes/shop/category');
 var productRoutes = require('./routes/shop/product');
 var orderRoutes = require('./routes/shop/order');
-var userRoutes = require('./routes/authentication/user');
 var saleRoutes = require('./routes/shop/sales');
 
-mongoose.connect(configDatabase.url, function () {
+var userRoutes = require('./routes/authentication/user');
+var authenticationRoutes = require('./routes/authentication/authentication');
+
+mongoose.connect(secret.database, function () {
   console.log('Connected to database');
 });
 
@@ -44,14 +50,28 @@ app.engine('.hbs', expressHbs({
 }));
 app.set('view engine', '.hbs');
 
-// uncomment after placing your favicon in /public
+
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({
+  secret: secret.secretKey,
+  saveUninitialized: true,
+  resave: true,
+  store: new MongoStore({ url: secret.database, autoReconnect: true})
+}));
+
 app.use(cookieParser());
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(function(req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(methodOverride('_method'));
+
 
 app.use(shopMiddleWare.getMainCategories);
 app.use(shopMiddleWare.getBras);
@@ -63,12 +83,13 @@ app.use(shopMiddleWare.getSwim);
 app.use(shopMiddleWare.getSport);
 app.use(shopMiddleWare.getLounge);
 
+app.use(indexRoutes);
 app.use(categoryRoutes);
 app.use(productRoutes);
 app.use(orderRoutes);
-app.use(userRoutes);
-app.use(indexRoutes);
 app.use(saleRoutes);
+app.use(userRoutes);
+app.use(authenticationRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

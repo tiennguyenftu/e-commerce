@@ -1,0 +1,68 @@
+<div class="container">
+    <ul class="list-group">
+        {{#if errors.length}}
+            <div class="alert alert-danger alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>{{errors}}
+            </div>
+        {{/if}}
+    </ul>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form action="/users" method="post">
+                <h1>Register an Account</h1>
+
+
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" name="username" id="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" name="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" name="password" id="password" pattern=".{8,20}" title="Password must be 8 to 20 characters" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" pattern=".{8,20}" title="Password must be 8 to 20 characters" required>
+                </div>
+
+                <!--<div class="form-group">-->
+                <!--<label for="address">Address:</label>-->
+                <!--<select name="address-type" id="address" class="form-control">-->
+                <!--<option>-- Select Address Type --</option>-->
+                <!--<option value="Home">Home</option>-->
+                <!--<option value="Work">Work</option>-->
+                <!--</select>-->
+                <!--</div>-->
+
+                <!--<div class="form-group">-->
+                <!--<label for="street">Street:</label>-->
+                <!--<input type="text" class="form-control" name="street" id="street">-->
+                <!--</div>-->
+
+                <!--<div class="form-group">-->
+                <!--<label for="city">City:</label>-->
+                <!--<input type="text" class="form-control" name="city" id="city">-->
+                <!--</div>-->
+
+                <!--<div class="form-group">-->
+                <!--<label for="zip">Zip:</label>-->
+                <!--<input type="text" class="form-control" name="zip" id="zip">-->
+                <!--</div>-->
+
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary btn-round" value="Register">
+                    <p>Already have an account? <a href="/login">Log In</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
