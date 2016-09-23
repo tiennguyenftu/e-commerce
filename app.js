@@ -15,12 +15,14 @@ var paginate = require('handlebars-paginate');
 
 var secret = require('./config/secret');
 var shopMiddleWare = require('./middleware/shop');
+var cartMiddleWare = require('./middleware/cart');
 
 var indexRoutes = require('./routes/index');
 var categoryRoutes = require('./routes/shop/category');
 var productRoutes = require('./routes/shop/product');
 var orderRoutes = require('./routes/shop/order');
 var saleRoutes = require('./routes/shop/sales');
+var cartRoutes = require('./routes/shop/cart');
 
 var userRoutes = require('./routes/authentication/user');
 var authenticationRoutes = require('./routes/authentication/authentication');
@@ -82,12 +84,15 @@ app.use(shopMiddleWare.getBeauty);
 app.use(shopMiddleWare.getSwim);
 app.use(shopMiddleWare.getSport);
 app.use(shopMiddleWare.getLounge);
+app.use(cartMiddleWare.getCartLength);
+
 
 app.use(indexRoutes);
 app.use(categoryRoutes);
 app.use(productRoutes);
 app.use(orderRoutes);
 app.use(saleRoutes);
+app.use(cartRoutes);
 app.use(userRoutes);
 app.use(authenticationRoutes);
 

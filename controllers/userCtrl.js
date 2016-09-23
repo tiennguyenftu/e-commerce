@@ -1,4 +1,6 @@
 var User = require('../models/User');
+var Cart = require('../models/Cart');
+var async = require('async');
 
 exports.getAllUsers = function (req, res, next) {
     User.find({}, function (err, users) {
@@ -20,24 +22,42 @@ exports.createUser = function (req, res, next) {
        return res.redirect('/register');
    }
 
-   User.find({$or: [{username: req.body.username}, {email: req.body.email}]}, function (err, existingUsers) {
-       if (err) return next(err);
-       if (existingUsers.length > 0) {
-           req.flash('errors', 'Username or Email already taken');
-           return res.redirect('/register');
-       }
+    async.waterfall([
+        function (callback) {
+            var newUser = new User();
+            newUser.username = req.body.username;
+            newUser.email = req.body.email;
+            newUser.password = req.body.password;
 
-       var newUser = new User();
-       newUser.username = req.body.username;
-       newUser.email = req.body.email;
-       newUser.password = req.body.password;
+            User.find({$or: [{username: req.body.username}, {email: req.body.email}]}, function (err, existingUsers) {
+                if (err) return next(err);
+                if (existingUsers.length > 0) {
+                    req.flash('errors', 'Username or Email already taken');
+                    return res.redirect('/register');
+                }
 
-       newUser.save(function (err) {
-           if (err) return next(err);
-           res.redirect('/products');
-       });
-   });
+                newUser.save(function (err) {
+                    if (err) return next(err);
+                    callback(null, newUser);
+                });
+
+            });
+        },
+
+        function (newUser) {
+            var cart = new Cart();
+            cart.owner = newUser._id;
+            cart.save(function (err) {
+                if (err) return next(err);
+                req.logIn(newUser, function(err) {
+                    if (err) return next(err);
+                    res.redirect('/products');
+                });
+            });
+        }
+    ]);
 };
+
 
 
 exports.updateUser = function (req, res, next) {
