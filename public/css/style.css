@@ -87,4 +87,8 @@ form {
   position: relative;
 }
 
+#nav-pills {
+  margin-bottom: 20px;
+}
+
 
