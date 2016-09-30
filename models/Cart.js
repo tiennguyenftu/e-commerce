@@ -48,7 +48,7 @@ cartSchema.methods.removeAll = function (_id) {
     });
 
     this.totalQuantity -= parseInt(item.quantity);
-    this.totalPrice = (this.totalPrice - parseInt(item.sale) * parseInt(item.quantity)).toFixed(2);
+    this.totalPrice = (this.totalPrice - parseFloat(item.sale) * parseInt(item.quantity)).toFixed(2);
 
     this.items = _.without(this.items, item);
 

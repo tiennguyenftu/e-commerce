@@ -6,13 +6,8 @@ var userSchema = new Schema({
     username: {type: String, unique: true, required: true},
     email: {type: String, unique: true, required: true},
     password: {type: String, required: true},
-    addresses: [{type: Schema.Types.Object}],
-    payment_methods: [
-        {
-            name: String,
-            payment_token: String
-        }
-    ]
+    address: {type: Schema.Types.Object}
+    // history: [Schema.Types.Object]
 });
 
 userSchema.pre('save', function (next) {

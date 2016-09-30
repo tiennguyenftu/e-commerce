@@ -4,7 +4,7 @@
             <h1>Shopping Cart</h1>
             <ul class="list-group">
                 {{#each cart.items}}
-                    <li class="list-group-item">
+                    <div class="list-group-item">
                         <span class="badge">{{this.quantity}}</span>
                         <img src="{{this.thumbnail}}" alt="{{this.name}}" style="width: 48px; height: auto">
                         <strong>{{this.name}}</strong>
@@ -19,7 +19,9 @@
                                 <li><a href="/remove/{{this._id}}">Remove All</a></li>
                             </ul>
                         </div>
-                    </li>
+                        <p id="detail" class="help-block"><strong>Size: {{this.sizes}}</strong>, <strong>Color: {{this.colors}}</strong></p>
+                    </div>
+
                 {{/each}}
             </ul>
         </div>
@@ -34,7 +36,7 @@
     <hr>
     <div class="row">
         <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-            <a href="/checkout" class="btn btn-success btn-round" type="button">Check Out</a>
+            <a href="/checkout" class="btn btn-success btn-round" >Check Out</a>
             <a href="/products" class="btn btn-info btn-round" type="button" style="float: right">Continue Shopping</a>
         </div>
     </div>

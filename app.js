@@ -23,6 +23,7 @@ var productRoutes = require('./routes/shop/product');
 var orderRoutes = require('./routes/shop/order');
 var saleRoutes = require('./routes/shop/sales');
 var cartRoutes = require('./routes/shop/cart');
+var checkoutRoutes = require('./routes/shop/checkout');
 
 var userRoutes = require('./routes/authentication/user');
 var authenticationRoutes = require('./routes/authentication/authentication');
@@ -93,6 +94,7 @@ app.use(productRoutes);
 app.use(orderRoutes);
 app.use(saleRoutes);
 app.use(cartRoutes);
+app.use(checkoutRoutes);
 app.use(userRoutes);
 app.use(authenticationRoutes);
 

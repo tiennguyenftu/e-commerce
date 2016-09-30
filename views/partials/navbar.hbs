@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="/#about">About <span class="sr-only">(current)</span></a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="/#contact">Contact</a></li>
             </ul>
             <form class="navbar-form navbar-left">
                 <div class="form-group">
@@ -28,8 +28,8 @@
                 <li><a href="/sales"><i class="fa fa-usd" aria-hidden="true"></i> Sales</a></li>
                 <li>
                     <a href="/cart">
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart {{#if cartLength}}
-                        <span class="badge">{{cartLength}}</span>
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart {{#if totalQuantity}}
+                        <span class="badge">{{totalQuantity}}</span>
                     {{/if}}
                     </a>
                 </li>

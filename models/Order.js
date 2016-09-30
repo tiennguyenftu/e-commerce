@@ -5,24 +5,9 @@ var orderSchema = new Schema({
     user_id: {type: Schema.Types.ObjectId, ref: 'User'},
     state: String,
     line_items: [
-        // {
-        //     _id: {type: Schema.Types.ObjectId, ref: 'Product'},
-        //     sku: String,
-        //     name: String,
-        //     quantity: Number,
-        //     pricing: {
-        //         retail: Number,
-        //         sale: Number
-        //     }
-        // }
         Schema.Types.Object
     ],
-    shipping_address: {
-        street: String,
-        city: String,
-        state: String,
-        zip: Number
-    },
+    shipping_address: Schema.Types.Object,
     sub_total: Number
 });
 
