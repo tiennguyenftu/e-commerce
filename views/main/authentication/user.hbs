@@ -2,4 +2,73 @@
     <h2>Welcome {{user.username}}</h2>
     <h4>Your Information</h4>
     <p><strong>Email:</strong> {{user.email}}</p>
+    <hr>
+    <h3>Payment History</h3>
+    {{#if orders.length}}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Purchased</th>
+                        <th>Ship to</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each orders}}
+                        <tr>
+                            <td>{{this._id}}</td>
+                            <td><button class="btn btn-info btn-xs btn-round" data-toggle="modal" data-target="#detail">View Detail</button></td>
+                            <td>{{this.shipping_address.street}}, {{this.shipping_address.city}}, {{this.shipping_address.state}} - {{this.shipping_address.zip}}</td>
+                            <td>{{this.date}}</td>
+                            <td><strong>${{this.sub_total}}</strong></td>
+                            <td>
+                                {{#if this.isProcessing}}
+                                    <span class="label label-primary">{{this.state}}</span>
+                                {{else}}
+                                    <span class="label label-success">{{this.state}}</span>
+                                {{/if}}
+                            </td>
+                        </tr>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">List Items</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group">
+                                            {{#each this.line_items}}
+                                                <div class="list-group-item">
+                                                    <span class="badge">{{this.quantity}}</span>
+                                                    <img src="{{this.thumbnail}}" alt="{{this.name}}" style="width: 48px; height: auto">
+                                                    <strong>{{this.name}}</strong>
+                                                    <span class="label label-success">${{this.sale}}</span>
+                                                    <p id="detail" class="help-block"><strong>Size: {{this.sizes}}</strong>, <strong>Color: {{this.colors}}</strong></p>
+                                                </div>
+
+                                            {{/each}}
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default btn-round" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+    {{else}}
+        <p><em>You have no order.</em></p>
+    {{/if}}
 </div>

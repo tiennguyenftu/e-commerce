@@ -8,7 +8,8 @@ var orderSchema = new Schema({
         Schema.Types.Object
     ],
     shipping_address: Schema.Types.Object,
-    sub_total: Number
+    sub_total: Number,
+    date: String
 });
 
 module.exports = mongoose.model('Order', orderSchema);

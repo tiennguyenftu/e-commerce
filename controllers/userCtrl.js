@@ -1,6 +1,7 @@
 var User = require('../models/User');
 var Cart = require('../models/Cart');
 var async = require('async');
+var Order = require('../models/Order');
 
 exports.getAllUsers = function (req, res, next) {
     User.find({}, function (err, users) {
@@ -10,9 +11,14 @@ exports.getAllUsers = function (req, res, next) {
 };
 
 exports.getUser = function (req, res, next) {
-    User.find({username: req.params.username}, function (err, user) {
-        if (err) return next(err);
-        res.render('main/authentication/user');
+    Order.find({user_id: req.user._id}, function (err, orders) {
+
+        for (var i = 0; i < orders.length; i++) {
+            if (orders[i].state === 'Processing') {
+                orders[i].isProcessing = true;
+            }
+        }
+        res.render('main/authentication/user', {orders: orders});
     });
 };
 
