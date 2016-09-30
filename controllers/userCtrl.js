@@ -57,7 +57,7 @@ exports.createUser = function (req, res, next) {
                 if (err) return next(err);
                 req.logIn(newUser, function(err) {
                     if (err) return next(err);
-                    res.redirect('/products');
+                    res.redirect('/profile');
                 });
             });
         }

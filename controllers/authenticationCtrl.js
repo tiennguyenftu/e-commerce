@@ -14,7 +14,7 @@ exports.getLogin = function (req, res, next) {
 };
 
 exports.postLogin = passport.authenticate('local-login', {
-    successRedirect: '/products',
+    successRedirect: '/profile',
     failureRedirect: '/login',
     failureFlash: true
 });

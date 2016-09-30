@@ -27,6 +27,7 @@ exports.postCheckOut = function (req, res, next) {
 
                 var order = new Order();
                 order.user_id = req.user._id;
+                order.name = req.body.name;
                 order.state = 'Processing';
                 order.line_items = cart.items;
                 order.shipping_address = {

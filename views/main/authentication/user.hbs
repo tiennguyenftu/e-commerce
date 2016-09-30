@@ -2,6 +2,48 @@
     <h2>Welcome {{user.username}}</h2>
     <h4>Your Information</h4>
     <p><strong>Email:</strong> {{user.email}}</p>
+    <!--<button class="btn btn-primary btn-round" data-toggle="modal" data-target="#address">Add Address</button>-->
+    <!--<p class="help-block">Add address to quickly fill the form when you check out.</p>-->
+
+    <!--&lt;!&ndash;Address Modal &ndash;&gt;-->
+    <!--<div class="modal fade" id="address" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">-->
+        <!--<div class="modal-dialog" role="document">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                    <!--<h4 class="modal-title" id="myModalLabel2">Your Address</h4>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<form action="/address" method="post" id="checkout-form">-->
+                        <!--<div class="row">-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="street">Street:</label>-->
+                                <!--<input type="text" class="form-control" name="street" id="street" required>-->
+                            <!--</div>-->
+
+                            <!--<div class="form-group">-->
+                                <!--<label for="city">City:</label>-->
+                                <!--<input type="text" class="form-control" name="city" id="city" required>-->
+                            <!--</div>-->
+
+                            <!--<div class="form-group">-->
+                                <!--<label for="state">State:</label>-->
+                                <!--<input type="text" class="form-control" name="state" id="state" required>-->
+                            <!--</div>-->
+
+                            <!--<div class="form-group">-->
+                                <!--<label for="zip">Zip:</label>-->
+                                <!--<input type="text" class="form-control" name="zip" id="zip" required pattern=".{5,6}" title="Zip Code must be 5 to 6 numbers">-->
+                            <!--</div>-->
+                        <!--<div class="text-center">-->
+                            <!--<input type="submit" class="btn btn-success btn-round" value="Save">-->
+                        <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
     <hr>
     <h3>Payment History</h3>
     {{#if orders.length}}
@@ -10,6 +52,7 @@
                 <thead>
                     <tr>
                         <th>Order ID</th>
+                        <th>Owner</th>
                         <th>Purchased</th>
                         <th>Ship to</th>
                         <th>Date</th>
@@ -21,7 +64,8 @@
                     {{#each orders}}
                         <tr>
                             <td>{{this._id}}</td>
-                            <td><button class="btn btn-info btn-xs btn-round" data-toggle="modal" data-target="#detail">View Detail</button></td>
+                            <td>{{this.name}}</td>
+                            <td><button class="btn btn-info btn-xs btn-round" data-toggle="modal" data-target="#{{this._id}}">View Detail</button></td>
                             <td>{{this.shipping_address.street}}, {{this.shipping_address.city}}, {{this.shipping_address.state}} - {{this.shipping_address.zip}}</td>
                             <td>{{this.date}}</td>
                             <td><strong>${{this.sub_total}}</strong></td>
@@ -34,13 +78,13 @@
                             </td>
                         </tr>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <!--Detail Modal -->
+                        <div class="modal fade" id="{{this._id}}" tabindex="-1" role="dialog" aria-labelledby="{{this._id}}">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">List Items</h4>
+                                        <h4 class="modal-title" id="{{this._id}}">List Items</h4>
                                     </div>
                                     <div class="modal-body">
                                         <ul class="list-group">
@@ -69,6 +113,6 @@
         </div>
 
     {{else}}
-        <p><em>You have no order.</em></p>
+        <p><em>You have no orders.</em></p>
     {{/if}}
 </div>

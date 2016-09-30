@@ -10,6 +10,7 @@ exports.getAllOrders = function (req, res, next) {
 exports.createOrder = function (req, res, next) {
     var newOrder = new Order();
     newOrder.user_id = req.body.user_id;
+    newOrder.name = req.body.name;
     newOrder.state = req.body.state;
     newOrder.line_items = req.body.line_items;
     newOrder.shipping_address = req.body.shipping_address;
