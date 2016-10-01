@@ -31,6 +31,10 @@
                     </div>
                 </div>
             </div>
+            <hr>
+            <div>
+                {{>fb/fb-like}}
+            </div>
         </div>
         <div class="col-sm-6">
             <h1>{{product.name}}</h1>
@@ -122,4 +126,15 @@
             </form>
         </div>
     </div>
+    <hr>
+    <div class="row">
+        {{>fb/fb-comments}}
+    </div>
+    <hr>
+    <div class="row">
+        <h4>Related Products</h4>
+    </div>
 </div>
+
+
+<script src="/js/fb-sdk.js"></script>
