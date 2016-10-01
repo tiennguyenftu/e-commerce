@@ -3,6 +3,7 @@ var router = express.Router();
 var categoryCtrl = require('../../controllers/categoryCtrl');
 var multer  = require('multer');
 var moment = require('moment');
+var passportConfig = require('../../config/passport');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -18,23 +19,23 @@ var upload = multer({ storage: storage });
 router.get('/categories', categoryCtrl.getAllCategories);
 
 /* GET/categories/add */
-router.get('/categories/add', categoryCtrl.addCategory);
+router.get('/categories/add', passportConfig.isAdmin, categoryCtrl.addCategory);
 
 /* GET/:category */
 router.get('/categories/:slug', categoryCtrl.getCategory);
 
 /* GET/:category/edit */
-router.get('/categories/:slug/edit', categoryCtrl.editCategory);
+router.get('/categories/:slug/edit', passportConfig.isAdmin, categoryCtrl.editCategory);
 
 
 
 /* POST/:category */
-router.post('/categories', upload.single('category-image'),categoryCtrl.createCategory);
+router.post('/categories', passportConfig.isAdmin, upload.single('category-image'),categoryCtrl.createCategory);
 
 /* PUT/:category */
-router.post('/categories/:slug/edit', upload.single('category-image'), categoryCtrl.updateCategory);
+router.post('/categories/:slug/edit', passportConfig.isAdmin, upload.single('category-image'), categoryCtrl.updateCategory);
 
 /* DELETE/:category */
-router.delete('/categories/:slug', categoryCtrl.deleteCategory);
+router.delete('/categories/:slug', passportConfig.isAdmin, categoryCtrl.deleteCategory);
 
 module.exports = router;

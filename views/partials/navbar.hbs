@@ -40,6 +40,9 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownAccount">
+                            {{#if user.role}}
+                                <li><a href="/dashboard">Dashboard</a></li>
+                            {{/if}}
                             <li><a href="/profile">Profile</a></li>
                             <li><a href="/logout">Log Out</a></li>
                         </ul>

@@ -11,7 +11,7 @@ exports.getAllUsers = function (req, res, next) {
 };
 
 exports.getUser = function (req, res, next) {
-    Order.find({user_id: req.user._id}, function (err, orders) {
+    Order.find({user_id: req.user._id}).sort({date: -1}).exec(function (err, orders) {
 
         for (var i = 0; i < orders.length; i++) {
             if (orders[i].state === 'Processing') {

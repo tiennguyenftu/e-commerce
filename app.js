@@ -27,6 +27,7 @@ var checkoutRoutes = require('./routes/shop/checkout');
 
 var userRoutes = require('./routes/authentication/user');
 var authenticationRoutes = require('./routes/authentication/authentication');
+var adminRoutes = require('./routes/authentication/admin');
 
 mongoose.connect(secret.database, function () {
   console.log('Connected to database');
@@ -99,6 +100,7 @@ app.use(cartRoutes);
 app.use(checkoutRoutes);
 app.use(userRoutes);
 app.use(authenticationRoutes);
+app.use(adminRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
