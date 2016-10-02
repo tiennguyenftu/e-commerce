@@ -1,134 +1,142 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card card-raised card-carousel">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <div class="carousel slide" data-ride="carousel">
+    <section>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card card-raised card-carousel">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <div class="carousel slide" data-ride="carousel">
 
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            {{#each product.images}}
-                                <li data-target="#carousel-example-generic" data-slide-to="{{@index}}" class="{{#unless @index}}active{{/unless}}"></li>
-                            {{/each}}
-                        </ol>
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                {{#each product.images}}
+                                    <li data-target="#carousel-example-generic" data-slide-to="{{@index}}" class="{{#unless @index}}active{{/unless}}"></li>
+                                {{/each}}
+                            </ol>
 
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
-                            {{#each product.images}}
-                                <div class="item {{#unless @index}}active{{/unless}}">
-                                    <img src="{{this}}" alt="{{@index}}">
-                                </div>
-                            {{/each}}
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                {{#each product.images}}
+                                    <div class="item {{#unless @index}}active{{/unless}}">
+                                        <img src="{{this}}" alt="{{@index}}">
+                                    </div>
+                                {{/each}}
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                <i class="material-icons">keyboard_arrow_left</i>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                <i class="material-icons">keyboard_arrow_right</i>
+                            </a>
                         </div>
-
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                            <i class="material-icons">keyboard_arrow_left</i>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                            <i class="material-icons">keyboard_arrow_right</i>
-                        </a>
                     </div>
                 </div>
+
+                <div>
+                    {{>fb/fb-like}}
+                    {{>shop/reviews/review-form}}
+                </div>
             </div>
+            <div class="col-sm-6">
+                <h1>{{product.name}}</h1>
+                <p class="help-block">{{product.date}}</p>
+                {{#equal product.pricing.retail product.pricing.sale}}
+                    <p><strong id="retail">${{product.pricing.retail}}</strong></p>
+                {{else}}
+                    <p>
+                        <strong>
+                            <span class="retail-price">${{product.pricing.retail}}</span> - <span class="sale-price">${{product.pricing.sale}} Sales Off!</span>
+                        </strong>
+                    </p>
+                {{/equal}}
+                <hr>
+                <p><strong>SKU:</strong> {{product.sku}}</p>
+                <p><strong>Description:</strong></p>
+                <p>{{{product.description}}}</p>
+                <form method="post" action="/cart">
+                    <input type="hidden" name="_id" value="{{product._id}}">
+                    <input type="hidden" name="slug" value="{{product.slug}}">
+                    <input type="hidden" name="name" value="{{product.name}}">
+                    <input type="hidden" name="sku" value="{{product.sku}}">
+                    <input type="hidden" name="retail" value="{{product.pricing.retail}}">
+                    <input type="hidden" name="sale" value="{{product.pricing.sale}}">
+                    <input type="hidden" name="thumbnail" value="{{product.images.[0]}}">
+                    {{#if product.details.sizes}}
+                        <div class="form-group">
+                            <label for="sizes">Sizes</label>
+                            <select name="sizes" id="sizes" class="form-control">
+                                {{#each product.details.sizes}}
+                                    <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    {{/if}}
 
-            <div>
-                {{>fb/fb-like}}
-                {{>shop/reviews/review-form}}
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <h1>{{product.name}}</h1>
-            <p class="help-block">{{product.date}}</p>
-            {{#equal product.pricing.retail product.pricing.sale}}
-                <p><strong id="retail">${{product.pricing.retail}}</strong></p>
-            {{else}}
-                <p>
-                    <strong>
-                        <span class="retail-price">${{product.pricing.retail}}</span> - <span class="sale-price">${{product.pricing.sale}} Sales Off!</span>
-                    </strong>
-                </p>
-            {{/equal}}
-            <hr>
-            <p><strong>SKU:</strong> {{product.sku}}</p>
-            <p><strong>Description:</strong></p>
-            <p>{{{product.description}}}</p>
-            <form method="post" action="/cart">
-                <input type="hidden" name="_id" value="{{product._id}}">
-                <input type="hidden" name="slug" value="{{product.slug}}">
-                <input type="hidden" name="name" value="{{product.name}}">
-                <input type="hidden" name="sku" value="{{product.sku}}">
-                <input type="hidden" name="retail" value="{{product.pricing.retail}}">
-                <input type="hidden" name="sale" value="{{product.pricing.sale}}">
-                <input type="hidden" name="thumbnail" value="{{product.images.[0]}}">
-                {{#if product.details.sizes}}
+                    {{#if product.details.colors}}
+                        <div class="form-group">
+                            <label for="colors">Colors</label>
+                            <select name="colors" id="colors" class="form-control">
+                                {{#each product.details.colors}}
+                                    <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    {{/if}}
+
                     <div class="form-group">
-                        <label for="sizes">Sizes</label>
-                        <select name="sizes" id="sizes" class="form-control">
-                            {{#each product.details.sizes}}
-                                <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                {{/if}}
-
-                {{#if product.details.colors}}
-                    <div class="form-group">
-                        <label for="colors">Colors</label>
-                        <select name="colors" id="colors" class="form-control">
-                            {{#each product.details.colors}}
-                                <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                {{/if}}
-
-                <div class="form-group">
-                    <label for="quantity">Quantity:</label>
-                    <div class="input-group">
+                        <label for="quantity">Quantity:</label>
+                        <div class="input-group">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quantity">
                             <span class="glyphicon glyphicon-minus"></span>
                             </button>
                         </span>
-                        <input type="text" name="quantity" class="form-control input-number" value="1" min="1" max="100" id="quantity">
-                        <span class="input-group-btn">
+                            <input type="text" name="quantity" class="form-control input-number" value="1" min="1" max="100" id="quantity">
+                            <span class="input-group-btn">
                             <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quantity">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </button>
                         </span>
+                        </div>
                     </div>
-                </div>
 
-                {{#if user}}
-                    <button type="submit" class="btn btn-danger btn-round"><i class="fa fa-shopping-cart" aria-hidden="true"></i> &nbsp; ADD TO CART</button>
+                    {{#if user}}
+                        <button type="submit" class="btn btn-danger btn-round"><i class="fa fa-shopping-cart" aria-hidden="true"></i> &nbsp; ADD TO CART</button>
 
-                {{else}}
-                    <a href="/login" class="btn btn-primary btn-round">Please Log In To Add To Cart</a>
-                {{/if}}
+                    {{else}}
+                        <a href="/login" class="btn btn-primary btn-round">Please Log In To Add To Cart</a>
+                    {{/if}}
 
-                {{#if product.categories}}
-                    <div class="form-group">
-                        Categories:
-                        {{#each product.categories}}
-                            <strong><span class="label label-success">{{this}}</span></strong>
-                        {{/each}}
-                    </div>
-                {{/if}}
+                    {{#if product.categories}}
+                        <div class="form-group">
+                            Categories:
+                            {{#each product.categories}}
+                                <strong><span class="label label-success">{{this}}</span></strong>
+                            {{/each}}
+                        </div>
+                    {{/if}}
 
-                {{#if product.tags}}
-                    <div class="form-group">
-                        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> :
-                        {{#each product.tags}}
-                            <strong><span class="label label-primary">#{{this}}</span></strong>
-                        {{/each}}
-                    </div>
-                {{/if}}
-            </form>
+                    {{#if product.tags}}
+                        <div class="form-group">
+                            <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> :
+                            {{#each product.tags}}
+                                <strong><span class="label label-primary">#{{this}}</span></strong>
+                            {{/each}}
+                        </div>
+                    {{/if}}
+                </form>
+            </div>
         </div>
-    </div>
+    </section>
 
-    {{>shop/reviews/reviews}}
+    <section>
+        {{>shop/reviews/reviews}}
+    </section>
+
+    <section>
+        {{>shop/feature-products/related-products}}
+    </section>
 </div>
 
 

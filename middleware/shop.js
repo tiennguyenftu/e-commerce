@@ -85,8 +85,30 @@ exports.getSport = function (req, res, next) {
 exports.getLounge = function (req, res, next) {
     Category.find({ancestors: 'Lounge'}, function (err, categories) {
         if (err) return next(err);
-        if (!categories) return next();
         res.locals.lounge = categories;
         next();
+    });
+};
+
+exports.relatedProducts = function (req, res, next) {
+    Product.findOne({slug: req.params.slug}, '_id categories', function (err, product) {
+        if (err) return next(err);
+        if (!product) return next();
+
+        Product.find({'$and': [{categories: {'$in': product.categories}}, {_id: {'$ne': product._id}}]}, 'name images pricing slug')
+            .sort({date: -1})
+            .exec(function (err, products) {
+                if (err) return next(err);
+                if (!products) return next();
+                var productChunks = [];
+                var chunkSize = 4;
+
+                for (var i = 0; i < products.length; i += chunkSize) {
+                    productChunks.push(products.slice(i, i + chunkSize));
+                }
+                res.locals.products = productChunks;
+
+                next();
+            });
     });
 };

@@ -6,7 +6,7 @@ var Product = require('../models/Product');
 router.get('/', function(req, res, next) {
   Product.find({}, 'name images pricing slug')
       .sort({date: -1})
-      .limit(12)
+      .limit(20)
       .exec(function (err, products) {
         if (err) return next(err);
         if (!products) return next();

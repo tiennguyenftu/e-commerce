@@ -24,7 +24,7 @@ router.get('/products', productCtrl.getAllProducts);
 router.get('/products/add', passportConfig.isAdmin, shopMiddleware.getAllCategories, productCtrl.addProduct);
 
 /* GET/:product */
-router.get('/products/:slug', productCtrl.getProduct);
+router.get('/products/:slug', shopMiddleware.relatedProducts, productCtrl.getProduct);
 
 /* GET/:product/edit */
 router.get('/products/:slug/edit', passportConfig.isAdmin, shopMiddleware.getAllCategories, productCtrl.editProduct);

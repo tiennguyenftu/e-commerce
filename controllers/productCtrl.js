@@ -34,6 +34,7 @@ exports.addProduct = function (req, res, next) {
 exports.getProduct = function (req, res, next) {
     async.waterfall([
         function (callback) {
+        console.log(res.locals.relatedProducts);
             Product.findOne({slug: req.params.slug}, function (err, product) {
                 if (err) return next(err);
                 if (!product) return res.redirect('/products');
@@ -82,8 +83,6 @@ exports.getProduct = function (req, res, next) {
                     stars.three.percentage = (stars.three.stars / reviews.length).toFixed(2) * 100;
                     stars.four.percentage = (stars.four.stars / reviews.length).toFixed(2) * 100;
                     stars.five.percentage = (stars.five.stars / reviews.length).toFixed(2) * 100;
-
-                    console.log(stars);
 
                     return res.render('main/shop/products/get-one', {product: product, reviews: reviews, stars: stars, averageRating: averageRating});
                 }
