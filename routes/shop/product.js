@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var productCtrl = require('../../controllers/productCtrl');
 var passportConfig = require('../../config/passport');
+var shopMiddleware = require('../../middleware/shop');
 
 var multer  = require('multer');
 var moment = require('moment');
@@ -20,13 +21,13 @@ var upload = multer({ storage: storage });
 router.get('/products', productCtrl.getAllProducts);
 
 /* GET/product/add*/
-router.get('/products/add', passportConfig.isAdmin, productCtrl.addProduct);
+router.get('/products/add', passportConfig.isAdmin, shopMiddleware.getAllCategories, productCtrl.addProduct);
 
 /* GET/:product */
 router.get('/products/:slug', productCtrl.getProduct);
 
 /* GET/:product/edit */
-router.get('/products/:slug/edit', passportConfig.isAdmin, productCtrl.editProduct);
+router.get('/products/:slug/edit', passportConfig.isAdmin, shopMiddleware.getAllCategories, productCtrl.editProduct);
 
 
 /* POST/:products */

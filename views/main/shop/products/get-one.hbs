@@ -31,17 +31,17 @@
                     </div>
                 </div>
             </div>
-            <hr>
+
             <div>
                 {{>fb/fb-like}}
-                {{>shop/review-form}}
+                {{>shop/reviews/review-form}}
             </div>
         </div>
         <div class="col-sm-6">
             <h1>{{product.name}}</h1>
             <p class="help-block">{{product.date}}</p>
             {{#equal product.pricing.retail product.pricing.sale}}
-                <strong><p id="retail">${{product.pricing.retail}}</p></strong>
+                <p><strong id="retail">${{product.pricing.retail}}</strong></p>
             {{else}}
                 <p>
                     <strong>
@@ -127,6 +127,8 @@
             </form>
         </div>
     </div>
+
+    {{>shop/reviews/reviews}}
 </div>
 
 

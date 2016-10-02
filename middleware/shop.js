@@ -1,6 +1,14 @@
 var Category = require('../models/Category');
 var Product = require('../models/Product');
 
+exports.getAllCategories = function (req, res, next) {
+    Category.find({}, 'name', function (err, categories) {
+        if (err) return next(err);
+        res.locals.allCategories = categories;
+        next();
+    });
+};
+
 exports.getMainCategories = function (req, res, next) {
     Category.find({parent: null}, 'name image slug', function (err, categories) {
         if (err) return next(err);

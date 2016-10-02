@@ -1,5 +1,7 @@
 var Product = require('../models/Product');
+var Review = require('../models/Review');
 var moment = require('moment');
+var async = require('async');
 
 exports.getAllProducts = function (req, res, next) {
     var perPage = 12;
@@ -30,10 +32,66 @@ exports.addProduct = function (req, res, next) {
 };
 
 exports.getProduct = function (req, res, next) {
-    Product.findOne({slug: req.params.slug}, function (err, product) {
-        if (err) return next(err);
-        res.render('main/shop/products/get-one', {product: product});
-    });
+    async.waterfall([
+        function (callback) {
+            Product.findOne({slug: req.params.slug}, function (err, product) {
+                if (err) return next(err);
+                if (!product) return res.redirect('/products');
+                callback(null, product);
+            });
+        },
+
+        function (product) {
+            Review.find({product_id: product._id}).sort({date: 1}).exec(function (err, reviews) {
+                if (err) return next(err);
+                if (reviews.length > 0) {
+                    var sum = 0;
+
+                    var stars = {
+                        one: {stars: 0, percentage: 0},
+                        two: {stars: 0, percentage: 0},
+                        three: {stars: 0, percentage: 0},
+                        four: {stars: 0, percentage: 0},
+                        five: {stars: 0, percentage: 0}
+                    };
+
+                    for (var i = 0; i < reviews.length; i++) {
+                        sum += reviews[i].rating;
+
+                        switch (reviews[i].rating) {
+                            case 1:
+                                stars.one.stars++;
+                                break;
+                            case 2:
+                                stars.two.stars++;
+                                break;
+                            case 3:
+                                stars.three.stars++;
+                                break;
+                            case 4:
+                                stars.four.stars++;
+                                break;
+                            case 5:
+                                stars.five.stars++;
+                                break;
+                        }
+                    }
+                    var averageRating = (sum/reviews.length).toFixed(1);
+                    stars.one.percentage = (stars.one.stars / reviews.length).toFixed(2) * 100;
+                    stars.two.percentage = (stars.two.stars / reviews.length).toFixed(2) * 100;
+                    stars.three.percentage = (stars.three.stars / reviews.length).toFixed(2) * 100;
+                    stars.four.percentage = (stars.four.stars / reviews.length).toFixed(2) * 100;
+                    stars.five.percentage = (stars.five.stars / reviews.length).toFixed(2) * 100;
+
+                    console.log(stars);
+
+                    return res.render('main/shop/products/get-one', {product: product, reviews: reviews, stars: stars, averageRating: averageRating});
+                }
+
+                res.render('main/shop/products/get-one', {product: product, reviews: reviews});
+            });
+        }
+    ]);
 };
 
 exports.editProduct = function (req, res, next) {
@@ -73,7 +131,7 @@ function upsert(req, res, next, product) {
     product.name = toTitleCase(req.body.name);
     product.sku = req.body.sku.toUpperCase();
     product.description = req.body.description;
-    product.slug = req.body.name.toLowerCase().split(' ').join('-');
+    product.slug = req.body.name.toLowerCase().trim().split(' ').join('-');
     if (req.files) {
         product.images = [];
         for (var i = 0; i < req.files.length; i++) {
